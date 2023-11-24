@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request,redirect
+from flask import Blueprint, render_template, request,redirect, flash
 from website.models import Oracle
 
 auth = Blueprint('auth', __name__)
@@ -10,9 +10,9 @@ def login():
         if nm_usuario:
             validation = oracle_db.user_login(nm_usuario)
             if validation == True:
-                return 'Validação efetuada'
+                print('Validação efetuada.')
             else:
-                return 'Usuario não encontrado'
+                flash('Falha na autenticação do usuário.', category='error')
         else:
-            return 'Usuário não informado'
+            flash('Usuário não informado!', category='error')
     return render_template("login.html")
